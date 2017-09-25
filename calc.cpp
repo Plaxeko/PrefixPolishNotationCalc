@@ -41,7 +41,6 @@ int main(int argc, char** argv)
     argselect(argc, argv);
 
     std::string user;
-
     while(std::getline(std::cin, user))
     {
         std::string sstream;
@@ -57,12 +56,11 @@ int main(int argc, char** argv)
             std::getline(readline, token, ' ');
             tokens.push_back(token);
             }while(!readline.eof());
-
-        for(auto token : offset(tokens, 1))//only use numbers after the first element in the line,check for integer
+         for(auto token : offset(tokens, 1))//only use numbers after the first element in the line,check for integer
         {
             try{
                     if(!isdigit(stol(token))){
-                         num.push_back(stol(token));
+                    num.push_back(stol(token));
                     }else
                         std::cout << "please enter a valid integer. ";
                 }
@@ -71,10 +69,8 @@ int main(int argc, char** argv)
                 std::cerr << "";
                 }
         }
-
             printoutput(verbose,num,op, tokens);
    }
-
     return 0;
 }
 
@@ -127,24 +123,16 @@ void printhelp()
                  "* ..........................................................................................*\n"
                  "* You can process a file with a set of operators which the program will process by line.    *\n"
                  "*********************************************************************************************\n"
-
-                 "Created by Amir Torabi CISC 187 Professor David Parillo. \n"
-
-
+                 "Created by Amir Torabi. \n"
 << std::endl;
-
     exit(1);
 }
-
-
 
 void argselect(int argc, char** argv)
 {
     const char* const opt = "hv";
-
     while(true)
     {
-
         const auto select = getopt(argc,argv,opt);
         if (-1 == select)
             break;
@@ -164,19 +152,16 @@ void argselect(int argc, char** argv)
             std::cout <<  "Unknown command" << std::endl;
             break;
         }
-
     }
 }
 
 bool isoper(char& op)
 {
-        if(op == '+' || op == '*' || op == '^')
-        {
+    if(op == '+' || op == '*' || op == '^')
+     {
             return true;
         }
     return false;
 }
-
-
 
 
