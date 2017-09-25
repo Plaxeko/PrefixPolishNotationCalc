@@ -1,23 +1,17 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <getopt.h>
-//#include <stack>
 #include <sstream>
-//#include <cstdlib>
 #include <vector>
-#include <algorithm>
-#include <iterator>
-int verbose = false;
-//std::string file = "test.txt";
 
+bool verbose = false;
+std::vector<long> num;
 
+void calculate(char op, std::vector<long>& num);
 void argselect(int argc, char** argv);
 void printhelp();
-//void printinter();
-//void printverbose();
 //bool isOper(string& user);
-//int calculate();
+
 //..............used to offset vector........................
 template <class T>
 struct iter_pair {
@@ -36,69 +30,67 @@ iter_pair<iterator_t<T&>> offset(T& container, size_t skip) {
     return {std::next(container.begin(), skip), container.end()};
 }
 //.......................................stackoverflow:Barry..
+
 int main(int argc, char** argv)
 {
     argselect(argc, argv);
-
     std::string user;
-
+    
     while(std::getline(std::cin, user))
     {
         std::string sstream;
         std::stringstream readline(user);
-        readline >> sstream;
+        readline >> sstream; // read line into stream then get oper
         char op = sstream[0];
-        std::cout << "first char: "<< op << std::endl;
+        if(op == 'q'){return 0;}
+
         std::vector<std::string> tokens;
         do {
             std::string token;
             std::getline(readline, token, ' ');
             tokens.push_back(token);
             }while(!readline.eof());
-        int size = tokens.size();
-        std::cout << size << std::endl;
 
-        for (auto token : offset(tokens, 1)) {
-        std::cout << token << ' ';
-    }
-        // numbers.push_back(user);
-        // int num;
-        //for(auto number: numbers)
-
-     // std::cout << number << "Yes" << std::endl;
-
-        /*
-        if(istringstream(user) >> num)
+        for(auto token : offset(tokens, 1))//only use numbers after the first element in the line
         {
-            cStack.push(num);
-
-        }else if(isOperator(user)) {
-            performOp(input, cStack);
-
-        }else if(user == "quit") {
-            return 0;
+             num.push_back(stol(token));
         }
-        */
-
+        //std::cout << "\n";
+        if(verbose == true){
+            for(auto token : tokens)
+            std::cout << token << std::endl;
+            calculate(op, num);
+        }else
+            calculate(op, num);
+            num.clear();
     }
-
-
     return 0;
 }
 
+void calculate(char op, std::vector<long>& num)
+{
+    long total = 1;
 
-
-//void performOP(const string& input, stack<int>&
-
+    if(op == '+'){
+       for (const auto& i: num)
+            total += i;
+            std::cout << total - 1<< "\n";
+    }else if(op == '*'){
+            for(const auto& i: num)
+                total *= i;
+                std::cout << total << "\n";
+    }else if(op == '^') {
+        for(const auto& i: num)
+            total ^= i;
+            std::cout << total << "\n";
+    }
+}
 
 void printhelp()
 {
-
     std::cout << "funcion help menu" << std::endl;
     exit(1);
 }
-
-
 
 void argselect(int argc, char** argv)
 {
@@ -106,7 +98,6 @@ void argselect(int argc, char** argv)
 
     while(true)
     {
-
         const auto select = getopt(argc,argv,opt);
         if (-1 == select)
             break;
@@ -114,16 +105,14 @@ void argselect(int argc, char** argv)
         {
         case 'v':
             verbose = true;
-
             std::cout << "verbose mode On" << std::endl;
             break;
         case 'h':
             std::cout << "This is the help menu" <<std::endl;
-
             break;
         case '?':
             default:
-            std::cout <<  "Unknown command" << std::endl;
+ std::cout <<  "Unknown command" << std::endl;
             break;
         }
 
@@ -144,29 +133,4 @@ bool isOper(const string& user)
     return false;
 }
 
-void calculate(const string& user, stack<int>& cStack )
-{
-    long calcValue, intValue, answer;
-    calcValue = cstack.top();
-    calcValue.pop();
-
-
-    return 0;
-
-}
-
-void printinter()
-{
-
-
-}
-
-void printverbose()
-{
-
-
-}
-
 */
-
-
